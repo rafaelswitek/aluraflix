@@ -2,30 +2,63 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Video;
+use Illuminate\Http\Request;
+
 class VideoController extends Controller
 {
-    public function store()
+    public function store(Request $request)
     {
-        return 'cadastrar';
+        return response()
+            ->json(Video::create($request->all()), 201);
     }
 
     public function index()
     {
-        return 'listar';
+        return response()
+            ->json(Video::all(), 200);
     }
 
     public function show(int $id)
     {
-        return 'buscar';
+        $video = Video::find($id);
+        if (is_null($video)) {
+            return response()
+                ->json('', 204);
+        }
+
+        return response()
+            ->json($video, 200);
     }
 
-    public function update(int $id)
+    public function update(int $id, Request $request)
     {
-        return 'atualizar';
+        $video = Video::find($id);
+        if (is_null($video)) {
+            return response()
+                ->json([
+                    "error" => "Recurso não encontrado"
+                ], 404);
+        }
+        $video->fill($request->all());
+        $video->save();
+
+        return response()
+            ->json($video, 200);
     }
 
     public function destroy(int $id)
     {
-        return 'apagar';
+        $video = Video::destroy($id);
+
+        if ($video === 0) {
+            return response()
+                ->json([
+                    "error" => "Recurso não encontrado"
+                ], 404);
+        }
+
+        return response()
+            ->json('', 204);
     }
 }
