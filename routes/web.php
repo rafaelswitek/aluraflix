@@ -16,3 +16,13 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+$router->group(['prefix' => 'api'], function () use ($router) {
+    $router->group(['prefix' => 'videos'], function () use ($router) {
+        $router->post('/', 'VideoController@store');
+        $router->get('/', 'VideoController@index');
+        $router->get('/{id}', 'VideoController@show');
+        $router->put('/{id}', 'VideoController@update');
+        $router->delete('/{id}', 'VideoController@destroy');
+    });
+});
