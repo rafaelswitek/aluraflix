@@ -25,4 +25,12 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->put('/{id}', 'VideoController@update');
         $router->delete('/{id}', 'VideoController@destroy');
     });
+
+    $router->group(['prefix' => 'categorias'], function () use ($router) {
+        $router->post('/', 'CategoryController@store');
+        $router->get('/', 'CategoryController@index');
+        $router->get('/{id}', 'CategoryController@show');
+        $router->put('/{id}', 'CategoryController@update');
+        $router->delete('/{id}', 'CategoryController@destroy');
+    });
 });
