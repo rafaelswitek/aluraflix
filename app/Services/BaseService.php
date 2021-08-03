@@ -10,7 +10,7 @@ abstract class BaseService
 {
     abstract protected function getModel(): Model;
 
-    abstract protected function getRules(): array;
+    abstract protected function getRules(bool $saving): array;
 
     public function list(): Collection
     {
@@ -19,7 +19,7 @@ abstract class BaseService
 
     public function save(array $data): array
     {
-        $validator = Validator::make($data, $this->getRules());
+        $validator = Validator::make($data, $this->getRules(true));
         if ($validator->fails()) {
             return [
                 "status" => false,
@@ -51,7 +51,7 @@ abstract class BaseService
 
     public function update(int $id, array $data): array
     {
-        $validator = Validator::make($data, $this->getRules());
+        $validator = Validator::make($data, $this->getRules(false));
         if ($validator->fails()) {
             return [
                 "status" => false,

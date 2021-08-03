@@ -32,5 +32,6 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->get('/{id}', 'CategoryController@show');
         $router->put('/{id}', 'CategoryController@update');
         $router->delete('/{id}', 'CategoryController@destroy');
+        $router->get('/{id}/videos', 'CategoryController@videos');
     });
 });

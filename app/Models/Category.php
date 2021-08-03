@@ -10,4 +10,9 @@ class Category extends Model
         'title',
         'color',
     ];
+
+    public function videos()
+    {
+        return $this->hasMany(Video::class);
+    }
 }
