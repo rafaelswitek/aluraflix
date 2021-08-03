@@ -10,4 +10,13 @@ class VideoService extends BaseService
     {
         return new Video;
     }
+
+    protected function getRules(): array
+    {
+        return [
+            'title' => 'required|unique:videos|max:100|min:3',
+            'description' => 'required|max:250',
+            'url' => 'required|unique:videos|max:100|url',
+        ];
+    }
 }
