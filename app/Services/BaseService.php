@@ -46,9 +46,11 @@ abstract class BaseService
             ];
         }
 
+        $preparedData = $this->prepareSave($data);
+
         return [
             "status" => true,
-            "data" => $this->getModel()::create($data)
+            "data" => $this->getModel()::create($preparedData)
         ];
     }
 
@@ -110,5 +112,10 @@ abstract class BaseService
             "status" => true,
             "data" => ["success" => "ID {$id} apagado."]
         ];
+    }
+
+    protected function prepareSave(array $data): array
+    {
+        return $data;
     }
 }

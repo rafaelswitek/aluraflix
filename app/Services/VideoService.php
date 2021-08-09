@@ -15,10 +15,7 @@ class VideoService extends BaseService
     protected function getRules(bool $saving): array
     {
         return [
-            'category_id' => [
-                new RequiredIf($saving),
-                'exists:categories,id'
-            ],
+            'category_id' => 'exists:categories,id',
             'title' => [
                 new RequiredIf($saving),
                 'unique:videos',
@@ -40,5 +37,14 @@ class VideoService extends BaseService
 
             ],
         ];
+    }
+
+    protected function prepareSave(array $data): array
+    {
+        if (!isset($data['category_id'])) {
+            $data['category_id'] = 1;
+        }
+
+        return $data;
     }
 }
