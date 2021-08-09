@@ -9,7 +9,7 @@ class VideosTest extends TestCase
     public function testRouteIndexSuccess()
     {
         $videoController = new VideoController(new VideoService);
-        $index = $videoController->index();
+        $index = $videoController->index(new Request());
 
         $this->assertEquals(200, $index->getStatusCode());
     }
