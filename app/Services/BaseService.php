@@ -12,9 +12,28 @@ abstract class BaseService
 
     abstract protected function getRules(bool $saving): array;
 
-    public function list(): Collection
+    public function list(?string $search): array
     {
-        return $this->getModel()::all();
+        if (isset($search)) {
+            $model = $this->getModel()->where('title', 'like', "%{$search}%")->get();
+            if (empty($model)) {
+                return [
+                    "status" => false,
+                    "errors" => ["error" => "Não encontrado."]
+                ];
+            }
+
+            return [
+                "status" => true,
+                "data" => $model
+            ];
+        }
+        $model = $this->getModel()::all();
+
+        return [
+            "status" => true,
+            "data" => $model->toArray()
+        ];
     }
 
     public function save(array $data): array

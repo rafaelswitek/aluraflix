@@ -10,9 +10,14 @@ class BaseController extends Controller
 {
     protected BaseService $service;
 
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        return response()->json($this->service->list(), 200);
+        $response = $this->service->list($request->search);
+        if (!$response['status']) {
+            return response()->json($response['errors'], 422);
+        }
+
+        return response()->json($response['data'], 200);
     }
 
     public function store(Request $request): JsonResponse
