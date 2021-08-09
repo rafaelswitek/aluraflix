@@ -24,6 +24,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->get('/{id}', 'VideoController@show');
         $router->put('/{id}', 'VideoController@update');
         $router->delete('/{id}', 'VideoController@destroy');
+        $router->get('/free', 'VideoController@free');
     });
 
     $router->group(['prefix' => 'categorias'], function () use ($router) {

@@ -7,6 +7,16 @@ use Illuminate\Validation\Rules\RequiredIf;
 
 class VideoService extends BaseService
 {
+    public function free(): array
+    {
+        $model = $this->getModel()::orderBy('id', 'desc')->limit(5)->get();
+
+        return [
+            "status" => true,
+            "data" => $model
+        ];
+    }
+
     protected function getModel(): Video
     {
         return new Video;
