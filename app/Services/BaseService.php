@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
 
@@ -15,7 +14,7 @@ abstract class BaseService
     public function list(?string $search): array
     {
         if (isset($search)) {
-            $model = $this->getModel()->where('title', 'like', "%{$search}%")->get();
+            $model = $this->getModel()->where('title', 'like', "%{$search}%")->paginate(5);
             if (empty($model)) {
                 return [
                     "status" => false,
@@ -28,7 +27,7 @@ abstract class BaseService
                 "data" => $model
             ];
         }
-        $model = $this->getModel()::all();
+        $model = $this->getModel()->paginate(5);
 
         return [
             "status" => true,
