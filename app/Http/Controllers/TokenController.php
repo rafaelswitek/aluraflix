@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Hash;
 
 class TokenController extends Controller
 {
-
     public function createToken(Request $request)
     {
         $this->validate($request, [
@@ -18,8 +17,6 @@ class TokenController extends Controller
             'password' => 'required',
         ]);
         $user = User::where('email', $request->email)->first();
-
-
 
         if (is_null($user) || !Hash::check($request->password, $user->password)) {
             return response()->json('Usuário ou senha inválidos!', 401);
@@ -29,6 +26,6 @@ class TokenController extends Controller
 
         return response()->json([
             'access_token' => $token
-        ], 401);
+        ], 201);
     }
 }
