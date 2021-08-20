@@ -18,13 +18,18 @@ $router->get('/', function () use ($router) {
 });
 
 $router->group(['prefix' => 'api'], function () use ($router) {
+    $router->post('login', 'TokenController@createToken');
+
+    $router->get('videos/free', 'VideoController@free');
+});
+
+$router->group(['prefix' => 'api', 'middleware' => 'auth'], function () use ($router) {
     $router->group(['prefix' => 'videos'], function () use ($router) {
         $router->post('/', 'VideoController@store');
         $router->get('/', 'VideoController@index');
         $router->get('/{id}', 'VideoController@show');
         $router->put('/{id}', 'VideoController@update');
         $router->delete('/{id}', 'VideoController@destroy');
-        $router->get('/free', 'VideoController@free');
     });
 
     $router->group(['prefix' => 'categorias'], function () use ($router) {
